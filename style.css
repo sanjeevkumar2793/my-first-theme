@@ -401,6 +401,14 @@ p {
     background: var(--accent);
     color: var(--surface);
 }
+
+/*portfolio*/
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+    
 /* Blog Wrapper */
 
 .blog-wrapper,

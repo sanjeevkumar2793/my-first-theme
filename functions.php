@@ -286,7 +286,7 @@ function myfirsttheme_services_cpt(){
             ),
             'public'       => true,
             'has_archive'  => true,
-            'supports'     => array('title', 'editor', 'thumbnail', 'excerpt','author','comments', 'revisions','page-attributes'),
+            'supports'     => array('title', 'editor', 'thumbnail', 'excerpt','author', 'revisions','page-attributes'),
             'menu_icon'    => 'dashicons-admin-generic',
             'rewrite'      => array('slug' => 'services'),
             
@@ -440,6 +440,74 @@ function myfirsttheme_portfolio($wp_customize){
     }
 }
 add_action('customize_register','myfirsttheme_portfolio');
+
+function myfirsttheme_portfolio_cpt(){
+    register_post_type(
+        'portfolio',
+        array(
+            'label' => 'Portfolio',
+            'labels' => array(
+                'name' => 'Portfolios',
+                'singular_name' => 'Portfolio',
+                'add_new' => 'Add New Portfolio',
+                'add_new_item' =>  'Add New Portfolio',
+                'edit_item' => 'Edit Portfolio',
+                'new_item' => 'New Portfolio',
+                'view_item'     => 'View Portfolio',
+                'search_items'  => 'Search Portfolio',
+                'not_found'     => 'No Portfolio found',
+            ),
+            'public' => true,
+            'has_archive' => false,
+            'supports'     => array('title', 'editor', 'thumbnail', 'excerpt','page-attributes'),
+            'menu_icon'    => 'dashicons-portfolio',
+            'rewrite'      => array('slug' => 'portfolio'),
+        )
+    );
+}
+add_action('init','myfirsttheme_portfolio_cpt');
+
+function myfirsttheme_portfolio_meta_box(){
+    add_meta_box(
+        'portfolio_details',
+        'Portfolio Details',
+        'myfirsttheme_portfolio_meta_callback',
+        'portfolio',
+        'side',
+        'high'
+    );
+}
+add_action('add_meta_boxes','myfirsttheme_portfolio_meta_box');
+
+function myfirsttheme_portfolio_meta_callback($post){
+    wp_nonce_field('myfirsttheme_portfolio_meta','portfolio_meta_nonce');
+    $tag =get_post_meta($post->ID,'_portfolio_tag',true);
+    $tags=array('Web design','Development','E-commerce','UI/UX Design','Optimization');
+    ?>
+    <p>
+        <label for="_protfolio_tag"><strong>Portfolio Tags</strong></label><br>
+        <select name="_portfolio_tag" id="_portfolio_tag" style="width:100%">
+            <?php foreach($tags as $tag_value) : ?>
+                <option value="<?php echo esc_attr($tag_value); ?>" <?php selected($tag,$tag_value) ?>>
+                    <?php echo esc_html($tag_value); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>   
+    </p>            
+    <?php
+}
+
+function myfirsttheme_portfolio_save_meta($post_id){
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSVE) return;
+    if(!isset($_POST['portfolio_meta_nonce']) || !wp_verify_nonce($_POST['portfolio_meta_nonce'],'myfirsttheme_portfolio_meta')) return;
+    if(!current_user_can('edit_post',$post_id)) return;
+    if(get_post_type($post_id) !== 'portfolio') return;
+    if(isset($_POST['_portfolio_tag'])){
+        update_post_meta($post_id,'_portfolio_tag',sanitize_text_field($_POST['_portfolio_tag']));
+    }
+}
+add_action('save_post','myfirsttheme_portfolio_save_meta');
+
 
 // cpt testimonials
 function myfirsttheme_testimonials_cpt(){
