@@ -32,7 +32,7 @@
                                     
                                             the_post_thumbnail(array(26,26)); 
                                     
-                                    } 
+                                    }
                                 ?>
                             </span>
                             <h3><?php echo esc_html(get_the_title()); ?></h3>
