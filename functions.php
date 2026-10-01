@@ -406,6 +406,41 @@ function myfirsttheme_service_icon_save($post_id){
     }
 }
 add_action('save_post','myfirsttheme_service_icon_save');
+
+//portfolio 
+function myfirsttheme_portfolio($wp_customize){
+    $wp_customize -> add_section('portfolio_options',array(
+        'title' =>__('Portfolio Options','myfirsttheme'),
+        'priority' => 55
+    ));
+    $portfolio_settings=array(
+        'portfolio_heading' => array(
+            'label' => __('Portfolio Heading','myfirsttheme'),
+            'default' => '',
+            'sanitize' =>'sanitize_text_field',
+            'type' => 'text',
+        ),
+        'portfolio_text' => array(
+            'label' => __('Portfolio Text','myfirsttheme'),
+            'default' =>'',
+            'sanitize' =>'sanitize_textarea_field',
+            'type' =>'textarea',
+        ),
+    );
+    foreach($portfolio_settings as $setting_id => $args){
+        $wp_customize->add_setting($setting_id,array(
+            'default' => $args['default'],
+            'sanitize_callback' => $args['sanitize'],
+        ));
+        $wp_customize->add_control($setting_id,array(
+            'label' => $args['label'],
+            'section' => 'portfolio_options',
+            'type' => $args['type'],
+        ));
+    }
+}
+add_action('customize_register','myfirsttheme_portfolio');
+
 // cpt testimonials
 function myfirsttheme_testimonials_cpt(){
     register_post_type(

@@ -3,6 +3,7 @@
         <?php get_template_part('template-parts/hero'); ?>
         <?php get_template_part('template-parts/about'); ?>
         <?php get_template_part('template-parts/our-services') ?>
+        <?php get_template_part('template-parts/portfolio') ?>
         <?php 
                 $query = new WP_Query(array(
                     'post_type' => 'post',
