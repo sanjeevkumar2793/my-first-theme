@@ -549,16 +549,34 @@ function myfirsttheme_hometestimonial_register($wp_customize){
         'title' =>__('Testimonial Options','myfirsttheme'),
         'priority' => 50,
     ));
-    $wp_customize->add_setting('testimonial_heading',array(
-       
-        'default' => 'Testimonial',
-        'sanitize_callback'=>'sanitize_text_field',
-    ));
-    $wp_customize->add_control('testimonial_heading',array(
-         'label' => __('Testimonial Heading','myfirsttheme'),
-          'type' => 'text',
-         'section' =>'testimonial_options',
-    ));
+    $testimonial_settings=array(
+        'testimonial_heading' => array(
+            'label' => __('Testimonial Heading','myfirsttheme'),
+            'default' => 'Testimonial',
+            'type' => 'text',
+            'sanitize'=>'sanitize_text_field',
+        ),
+        'testimonial_text' => array(
+            'label' => __('Testimonial Text','myfirsttheme'),
+            'default' => '',
+            'type' => 'textarea',
+            'sanitize' => 'sanitize_textarea_field',
+        )
+    );
+    foreach($testimonial_settings as $setting_id=>$args)
+    {       
+         $wp_customize->add_setting($setting_id,array(
+            'default' => $args['default'],
+            'sanitize_callback' => $args['sanitize'],
+         ));
+         $wp_customize->add_control($setting_id,array(
+            'type' => $args['type'],
+            'label' => $args['label'], 
+            'section' =>'testimonial_options',
+         ));
+    }
+   
+   
 }
 add_action('customize_register','myfirsttheme_hometestimonial_register');
 
