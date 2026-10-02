@@ -3,7 +3,7 @@
     $portfolio_text = get_theme_mod('portfolio_text','');
     $portfolio_query = new WP_Query(array(
         'post_type' => 'portfolio',
-        'posts_per_page' => 3,
+        'posts_per_page' => 6,
         'orderby' => 'menu_order',
         'order' =>'ASC',
     ));
@@ -23,11 +23,13 @@
                 <?php while($portfolio_query->have_posts()) : $portfolio_query->the_post(); ?>
                    <?php  $portfolio_tag = get_post_meta(get_the_ID(),'_portfolio_tag',true); ?>
                     <article class="portfolio-card">
-                        <div class="portfolio-media">
-                            <?php if(has_post_thumbnail()) : ?>
-                               <?php the_post_thumbnail('medium'); ?>
-                            <?php endif; ?>
-                        </div>
+                        <?php 
+                            $thumb_url = esc_url(get_the_post_thumbnail_url(get_the_ID(),'medium'));
+                            if($thumb_url) : ?>
+                              <div class="portfolio-media" style="background-image:url('<?php echo $thumb_url; ?>');"></div> 
+                              
+                        <?php endif; ?>
+                        
                         <div class="portfolio-overlay">
                             <span class="portfolio-tag">
                                 <?php
@@ -42,6 +44,13 @@
                             <p>
                                 <?php echo esc_html(get_the_excerpt()); ?>
                             </p>
+                          <?php
+                            $portfolio_url = get_post_meta(get_the_ID(),'_portfolio_url',true);
+                            if($portfolio_url){
+                                echo '<a class="portfolio-link" href="' . esc_url($portfolio_url) . '"  target="_blank">View project <span aria-hidden="true">&rsaquo;</span></a>';
+                            }
+                          ?>                        
+                            
                         </div>
                     </article>
                 <?php endwhile; ?>

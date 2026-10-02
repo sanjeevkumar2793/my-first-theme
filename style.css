@@ -58,7 +58,7 @@ Version: 1.0
     --border: rgba(33, 38, 45, 0.12);
     --font-head: "Space Grotesk", "Segoe UI", Arial, sans-serif;
     --font-body: "Inter", "Segoe UI", Arial, sans-serif;
-    --primarty-text: #21262D;
+    --primary-text: #21262D;
     --secondory-text: #565C66;
     --paper: #F4F4F1;
     --paper-deep: #E7E7E2;
@@ -123,7 +123,7 @@ html {
 body {
   font-family: var(--font-body);
   background: var(--paper);
-  color: var(--primarty-text);
+  color: var(--primary-text);
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -197,7 +197,7 @@ body {
 }
 
 .primary-menu a:hover {
-   color: var(--primarty-text);
+   color: var(--primary-text);
 }
 .primary-menu a::after {
     content: "";
@@ -271,7 +271,7 @@ h1, h2, h3 {
     font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.01em;
-    color: var(--primarty-text);
+    color: var(--primary-text);
 }
 h2 {
     font-size: clamp(1.9rem, 3.2vw, 2.6rem);
@@ -344,7 +344,7 @@ p {
     font-family: var(--font-head);
     font-weight: 700;
     font-size: 1.6rem;
-    color: var(--primarty-text);
+    color: var(--primary-text);
 }
 .about-stats-text {
     font-size: 0.85rem;
@@ -387,7 +387,7 @@ p {
 .learn-more {
     font-size: 0.88rem;
     font-weight: 600;
-    color: var(--primarty-text);
+    color: var(--primary-text);
 }
 .learn-more:hover {
     color: var(--accent-dim);
@@ -408,7 +408,72 @@ p {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 }
-    
+.portfolio-card {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+}
+.portfolio-media {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #21262D 0%, #3D4550 100%);
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+.portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    background: linear-gradient(180deg, rgba(33,38,45,0) 40%, rgba(33,38,45,0.82) 100%);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.portfolio-card:hover .portfolio-overlay, .portfolio-card:focus-within .portfolio-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+ .portfolio-tag {
+    display: inline-block;
+    align-self: flex-start;
+    font-family: var(--font-head);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--primary-text);
+    background: var(--surface);
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+}
+.portfolio-overlay h3 {
+    color: var(--paper);
+    margin-bottom: 0.35rem;
+    font-size: 1.1rem;
+}
+.portfolio-overlay p {
+    color: rgba(244,244,241,0.8);
+    font-size: 0.85rem;
+    margin-bottom: 0.9rem;
+    max-width: 42ch;
+}
+.portfolio-link {
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--paper);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.portfolio-link:hover {
+    color: var(--accent);
+}
 /* Blog Wrapper */
 
 .blog-wrapper,

@@ -483,9 +483,10 @@ function myfirsttheme_portfolio_meta_callback($post){
     wp_nonce_field('myfirsttheme_portfolio_meta','portfolio_meta_nonce');
     $tag =get_post_meta($post->ID,'_portfolio_tag',true);
     $tags=array('Web design','Development','E-commerce','UI/UX Design','Optimization');
+    $portfolio_url = get_post_meta($post->ID,'_portfolio_url',true);
     ?>
     <p>
-        <label for="_protfolio_tag"><strong>Portfolio Tags</strong></label><br>
+        <label for="_portfolio_tag"><strong>Portfolio Tags</strong></label><br>
         <select name="_portfolio_tag" id="_portfolio_tag" style="width:100%">
             <?php foreach($tags as $tag_value) : ?>
                 <option value="<?php echo esc_attr($tag_value); ?>" <?php selected($tag,$tag_value) ?>>
@@ -493,17 +494,24 @@ function myfirsttheme_portfolio_meta_callback($post){
                 </option>
             <?php endforeach; ?>
         </select>   
-    </p>            
+    </p>  
+    <p>
+        <label for="_portfolio_url"><strong>Project URL</strong></label><br>
+        <input type="url" name="_portfolio_url" id="_portfolio_url" class="widefat" value="<?php echo esc_attr($portfolio_url); ?>"  placeholder="https://example.com/project" >
+    </p>          
     <?php
 }
 
 function myfirsttheme_portfolio_save_meta($post_id){
-    if(defined('DOING_AUTOSAVE') && DOING_AUTOSVE) return;
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if(!isset($_POST['portfolio_meta_nonce']) || !wp_verify_nonce($_POST['portfolio_meta_nonce'],'myfirsttheme_portfolio_meta')) return;
     if(!current_user_can('edit_post',$post_id)) return;
     if(get_post_type($post_id) !== 'portfolio') return;
     if(isset($_POST['_portfolio_tag'])){
         update_post_meta($post_id,'_portfolio_tag',sanitize_text_field($_POST['_portfolio_tag']));
+    }
+    if(isset($_POST['_portfolio_url'])){
+        update_post_meta($post_id,'_portfolio_url',esc_url_raw($_POST['_portfolio_url']));
     }
 }
 add_action('save_post','myfirsttheme_portfolio_save_meta');
