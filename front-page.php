@@ -5,7 +5,7 @@
         <?php get_template_part('template-parts/our-services'); ?>
         <?php get_template_part('template-parts/portfolio'); ?>
         <?php get_template_part('template-parts/testimonial'); ?>
-       
+        <?php get_template_part('template-parts/contact'); ?>
 
 
     </main>    

@@ -651,13 +651,85 @@ function myfirsttheme_testimonial_save_meta($post_id) {
 }
 add_action('save_post','myfirsttheme_testimonial_save_meta');
 
+function myfirsttheme_homeContact($wp_customize){
+    $wp_customize->add_section('contact_options',array(
+        'title' => __('Contact Options','myfirsttheme'),
+        'priority' => 60,
+    ));
+    $contact_settings=array(
+        'contact_heading' => array(
+            'label' => __('Contact Heading','myfirsttheme'),
+            'default' => '',
+            'type' => 'text',
+            'sanitize' => 'sanitize_text_field',
+        ),
+        'contact_text' => array(
+            'label' => __('Contact Text','myfirsttheme'),
+            'default' => '',
+            'type' => 'textarea',
+            'sanitize' => 'sanitize_textarea_field',
+        ),
+    );
+    foreach($contact_settings as $setting_id => $args){
+        $wp_customize->add_setting($setting_id,array(
+            'default' => $args['default'],
+            'sanitize_callback' => $args['sanitize'],
+        ));
+        $wp_customize->add_control($setting_id,array(
+            'label' => $args['label'],
+            'type' => $args['type'],
+            'section' => 'contact_options'
+        ));
+    }
+}
+add_action('customize_register','myfirsttheme_homeContact');
+
+function myfirsttheme_handle_contact(){
+    if(isset($_POST['cf_submit'])){
+        if(!isset($_POST['contact_nonce']) || !wp_verify_nonce($_POST['contact_nonce'],'myfirsttheme_contact_action')){
+            return;
+        }
+
+        if(!empty($_POST['cf_website'])){
+            return;
+        }
+
+        $name = sanitize_text_field($_POST['cf_name']);
+        $email = sanitize_email($_POST['cf_email']);
+        $message = sanitize_textarea_field($_POST['cf_message']); 
+
+        if(!is_email($email) || empty(trim($name)) || empty(trim($message)) ){
+            return;
+        }
+
+        $to = get_option('admin_email');
+        $subject = 'Contact: '.$name;
+        $body = "Name: $name\nEmail: $email\n\n$message";
+        $headers = array('Reply-To:' . $email);
+     
+        $sent = wp_mail($to,$subject,$body,$headers);
+        if($sent){
+            error_log('Contact mail SENT to: ' . $to);
+        } else {
+            error_log('MAIL FAILED to: ' . $to);
+        }
+
+        wp_redirect(add_query_arg('contact','sent',wp_get_referer()?: home_url('/') ));
+        exit;
+    }
+}
+add_action('init','myfirsttheme_handle_contact');
+
+
+//qlxffxdbkryuwwqu
 //footer
 
 function myfirsttheme_widgets_init(){
     $footer_cols=array(
         array('name' => __('Footer Column 1 - Logo/About','myfirsttheme'), 'id' => 'footer-1'),
         array('name' => __('Footer Columm 2 - Navigation','myfirsttheme'), 'id' => 'footer-2'),
-        array('name' => __('Footer Column 3 - Contact','myfirsttheme'),'id' => 'footer-3'),
+        array('name' => __('Footer Columm 3 - Navigation','myfirsttheme'), 'id' => 'footer-3'),
+        array('name' => __('Footer Column 4 - Contact','myfirsttheme'),'id' => 'footer-4'),
     );
     foreach ($footer_cols as $col){
          register_sidebar(array(
@@ -672,3 +744,4 @@ function myfirsttheme_widgets_init(){
    
 }
 add_action('widgets_init','myfirsttheme_widgets_init');
+

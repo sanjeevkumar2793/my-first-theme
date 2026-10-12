@@ -916,42 +916,100 @@ p {
 .slider-dots {
     margin-top: 0;
 }
-/*footer*/
+/*contact*/
+.hp-field{position:absolute;left:-9999px;}
 
+/*footer*/
 .site-footer {
     border-top: 1px solid #ddd;
-    background: #255a97;
+    background: var(--primary-text);
     color: #fff;
+    padding-top: 4rem;
 }
+
 
 .site-footer .site-container {
     padding: 0;
     display: block;
 }
 
-.site-footer p {
-    text-align: center;
-    width: 100%;
-}
+
 
 .footer-widgets {
     display: grid;
-    /* grid-template-columns: repeat(3, 1fr); */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 40px 0;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(239,234,224,0.14);
 }
-
+.footer-col-1 img {
+    filter: brightness(0) invert(1);
+    margin-bottom: 1rem;
+}
+.footer-col-1 p {
+    width: 100%;
+    color: rgba(239, 234, 224, 0.65);
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+}
 .footer-widget-title {
     color: #fff;
     font-size: 18px;
     margin: 0 0 15px;
 }
-
-.footer-widget a {
-    color: rgba(255, 255, 255, 0.8);
+.footer-column a {
+    color: rgba(239,234,224,0.7);
+    font-size: 0.9rem;
+    transition: color 0.15s ease;
 }
-
+.footer-column a:hover {
+    color: var(--accent);
+}
+.social-icons {
+    display: flex;
+    gap: 0.75rem;
+}
+.social-icons a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(239, 234, 224, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+.social-icons a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.footer-widget h3 {
+    color: var(--paper);
+    font-size: 0.92rem;
+    margin-bottom: 1.1rem;
+}
+.footer-contact a{
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+.footer-contact a svg {
+    width: 0.9rem;
+    height: 0.9rem;
+}
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     padding-block: .87rem;
+    color: rgba(239, 234, 224, 0.55);
+}
+.footer-bottom p {
+    margin-bottom: 0;
+    text-align: center;
+    color: var(--secondory-text);
+    font-size: .85rem;
+}
 /* Responsive */
 
 @media (max-width: 991px) {
