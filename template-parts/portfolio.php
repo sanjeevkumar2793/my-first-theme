@@ -8,10 +8,10 @@
         'order' =>'ASC',
     ));
 ?>
-<section class="portfolio" id="portfolio">
+<section class="portfolio paper-deep" id="portfolio">
     <div class="container">
        <div class="section-head">
-            <h2>
+            <h2 class="heading-mb">
                 <?php echo esc_html($portfolio_heading); ?>
             </h2>
             <p>
@@ -47,7 +47,10 @@
                           <?php
                             $portfolio_url = get_post_meta(get_the_ID(),'_portfolio_url',true);
                             if($portfolio_url){
-                                echo '<a class="portfolio-link" href="' . esc_url($portfolio_url) . '"  target="_blank">View project <span aria-hidden="true">&rsaquo;</span></a>';
+                                echo '<a class="portfolio-link" href="' . esc_url($portfolio_url) . '"  target="_blank">View project <span aria-hidden="true">›</span></a>';
+                            }
+                            else{
+                                echo '<a class="portfolio-link" href="#" >View project <span aria-hidden="true">›</span></a>';
                             }
                           ?>                        
                             

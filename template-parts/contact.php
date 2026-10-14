@@ -3,18 +3,21 @@
     $contact_text=get_theme_mod('contact_text','');
 ?>
 
-<section class="cta-band" id="contact">
+<section class="cta-band paper-deep" id="contact">
     <div class="container">
-        <h2>
-            <?php echo esc_html($contact_heading); ?>
-        </h2>
-        <p>
-            <?php echo esc_html($contact_text); ?>
-        </p>
-       <?php echo do_shortcode('[forminator_form id="163"]'); ?>
-    <?php if(isset($_GET['contact']) &&  $_GET['contact'] ==='sent'): ?>
-         <p class="contact-success">Message sent! Thanks.</p>
-    <?php endif; ?>
+        <div class="section-head">
+            <h2 class="heading-mb">
+                <?php echo esc_html($contact_heading); ?>
+            </h2>
+            <p>
+                <?php echo esc_html($contact_text); ?>
+            </p>
+        </div>
+       <div class="contact-form">
+            <?php echo do_shortcode('[forminator_form id="163"]'); ?>
+       </div>
+       
+    
         
     </div>
 </section>

@@ -12,7 +12,7 @@
 <section class="services" id="services">
     <div class="container">
         <div class="section-head">
-            <h2>
+            <h2 class="heading-mb">
                 <?php echo esc_html($our_services_heading); ?>
             </h2>
             <p>

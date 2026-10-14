@@ -12,7 +12,7 @@
     $about_btn_label = get_theme_mod('about_btn_label','');
     $about_btn_link = get_theme_mod('about_btn_link','');
 ?>
-<section class="about" id="about">
+<section class="about paper-deep" id="about">
     <div class="container about-grid">
         <div class="about-image">
              <?php if($about_image) : 
@@ -31,7 +31,7 @@
             <p class="hero-tag">
                 <?php echo esc_html($about_subtitle); ?>
             </p>
-             <h2 >
+             <h2 class="heading-mb">
                 <?php echo esc_html($about_heading); ?>
             </h2>
             <p>

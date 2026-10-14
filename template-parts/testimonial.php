@@ -11,7 +11,7 @@
         <section class="testimonials" id="testimonials">
             <div class="container">
                 <div class="section-head">
-                    <h2>
+                    <h2 class="heading-mb">
                         <?php echo esc_html($testimonial_heading); ?>
                     </h2>
                     <p>
